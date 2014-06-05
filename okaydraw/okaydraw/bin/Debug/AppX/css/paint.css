@@ -1,0 +1,170 @@
+﻿body {
+	background-image: url('../images/blue-wood.jpg')
+}
+		
+#canvascontainer {
+	position: absolute;
+	top:10%;
+	left:25%;
+	width: 70%;
+	height: 70%;
+	background-color: white;
+	border: solid 1px black;
+}
+
+#stats {
+	position: absolute;
+	top: 31%;
+	width:20%;
+	left:2%;
+	height:35%;
+	display:none;
+}
+
+#ipuname {
+	position: absolute;
+	top: 31%;
+	width:20%;
+	left:2%;
+	height:35%;
+}
+
+#uname {
+	width: 100%;
+}
+
+#draw {
+	border: 1px solid black;
+}
+
+.palcol {
+	width: 65px;
+	height: 65px;
+	margin-top: 10px;
+	float: left;
+	cursor: pointer;
+	margin-left: 8px;
+	border-radius: 50px 50px;
+}
+
+.palrad {
+	background-color: red;
+	float: left;
+	cursor: pointer;
+	margin-left: 8px;
+	border-radius: 400px 400px;
+}
+
+#small {
+	margin-top:32px;
+	width:30px;
+	height:30px;
+}
+
+#medium {
+	margin-top: 18px;
+	width:50px;
+	height:50px;
+}
+
+#large {
+	width:80px;
+	height:80px;
+}
+
+.palcol:hover {
+	box-shadow: 2px 2px 2px 2px #444444;
+}
+
+.palrad:hover {
+	box-shadow: -2px 2px 2px 2px #444444;
+}
+
+#colors {
+	float: right;
+	position:absolute;
+	top: 85%;
+	left:42%;
+	height: 10%;
+
+}
+
+#logo {
+	position:absolute;
+	top:5%;
+	left:4%;
+	/*border:1px solid black;*/
+	height: 25%;
+	width: 15%;
+}
+
+#logoImg {
+	width: 100%;
+	height:100%;
+}
+
+#radii {
+	float:right;
+	position:absolute;
+	top:85%;
+	left:27%;
+	height:10%;
+}
+
+.normal {
+	width: 27%;
+	height: 7%;
+	text-align: center;
+	border: 3px solid green;
+	background-color: yellow;
+	font-family:Calibri;
+	font-size: medium;
+}
+
+#headdiv {
+	top:30%;
+	position: fixed;
+	z-index:1;
+}
+
+.tablehead {
+	font-family: Cambria;
+	font-size: large;
+	width: 22%;
+	height:9%;
+	border: 3px solid green;
+	text-align:center;
+	background-color: white;
+}
+
+#statdiv {
+	position: absolute;
+	overflow-y: scroll;
+	top:13%;
+	height:64%;
+}
+
+#chatbox {
+	width:18.8%;
+	height:35%;
+	position:absolute;
+	top:65%;
+	left:2.2%;
+}
+
+#textarea {
+	background-color: white;
+	width:96%;
+	height:76%;
+	padding:2%;
+	overflow-y:scroll;
+}
+
+#inputdiv {
+	margin-top:5%;
+}
+
+#ip {
+	margin-right:0.5%;
+	width: 75%;
+}

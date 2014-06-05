@@ -1,0 +1,63 @@
+﻿<html>
+<head>
+	<meta charset="utf-8" />
+	<title>Paint</title>
+	<!--<script src="js/default.js"></script>-->
+	<script src="js/paint.js"></script>
+	<script src="js/websoc.js"></script>
+	<link href="css/paint.css" rel="stylesheet" />	
+</head>
+<body>
+	<div id="logo">
+		<img id="logoImg" src="images/picGuessLogo.png" alt="Logo" />
+	</div>
+
+	<div id="ipuname">
+		<input id="uname" type="text" placeholder="Please enter a username"/>
+	</div>
+
+	<div id="stats" style="display:none">
+		<div id="headdiv">
+			<table id="heading">
+				<tr><td class="tablehead">Name</td><td class="tablehead">Score</td></tr>
+			</table>
+		</div>
+		<div id="statdiv">
+			<table id="stattable"></table>
+		</div>
+	</div>
+
+	<div id="chatbox">
+		<div id="textarea"></div>
+		<div id="inputdiv">
+			<input id="ip" type="text"/>
+			<button id="subbut">Enter</button>
+		</div>
+	</div>
+
+	<div id="canvascontainer">
+		<canvas id="draw">
+					Not Supported!!
+		</canvas>
+	</div>
+
+	<div id="radii">
+		<div class="palrad" id="small"></div>
+		<div class="palrad" id="medium"></div>
+		<div class="palrad" id="large"></div>
+	</div>
+
+	<div id="colors">
+			<div class="palcol" id="Red" style="background-color: red;"></div>
+			<div class="palcol" id="Yellow" style="background-color: yellow;"></div>
+			<div class="palcol" id="Orange" style="background-color: orange;"></div>
+			<div class="palcol" id="Magenta" style="background-color: magenta;"></div>
+			<div class="palcol" id="Black" style="background-color: black;"></div>
+			<div class="palcol" id="Blue" style="background-color: blue;"></div>
+			<div class="palcol" id="Green" style="background-color: green;"></div>
+			<div class="palcol" id="Purple" style="background-color: purple;"></div>
+			<div class="palcol" id="Brown" style="background-color: brown;"></div>
+			<div class="palcol" id="White" style="background-color: white;"></div>
+	</div>
+	</body>
+</html>

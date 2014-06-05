@@ -1,0 +1,117 @@
+<html>
+<head>
+	<title>Paint</title>
+	<script src="./paint.js"></script>
+	<script src="./websoc.js"></script>
+	<style>
+		#draw{
+			background-color:white;
+		}
+		.top {
+			float:left;
+		}
+		
+		#form { 
+			width: 48%;
+		}
+
+		/*#button {
+			width: 5%;
+		}
+
+		#linebutton {
+			width: 2%;
+		}
+		
+		#rectbutton {
+			
+			width: 4%;
+		}*/
+		#info { 
+			width: 34%;
+		}
+
+		.rightmargin{
+			margin-right: 4px;
+			font-weight: normal;
+			font-stretch: condensed;
+		}
+		.numberip {
+			width: 10%;
+		}
+		#rad {
+			width:15%;
+		}
+		.palcol {
+			width:19px;
+			height:20px;
+			margin-top: 15px;
+			border: solid thin rgba(0,0,0,0.5);
+			float: left;
+			cursor: pointer;
+		}
+		.palcol:hover {
+			box-shadow: 1px 1px 1px 1px black;
+		}
+		#palette{
+			margin-left: 3px;
+		}
+		#selected {
+			width: 40px;
+			height: 40px;
+			margin-top: 10px;
+			background-color: black;
+			float: left;
+			border: solid 1px black;
+		}
+		#showcol {
+			margin-top: 10px;
+			margin-left: 5px;
+			float: left;
+			margin-right: 3px;
+			width:10%;
+		}
+		#colors {
+			float: right;
+		}
+	</style>
+	
+</head>
+<body>
+	<div id="form" class="top">
+		<form id="form1">
+		x: <input class="numberip" id="xip" size=1 type="number" placeholder="Enter x"/>
+		y: <input class="numberip" id="yip" size=1 type="number" placeholder="Enter y"/>
+		Color: <input list="color_list" id="col" name="color" size=8 placeholder="Enter color">
+		<datalist id="color_list">
+			<option value="Red(#FF0000)"></option>
+			<option value="Green(#00FF00)"></option>
+			<option value="Blue(#0000FF)"></option>
+			<option value="Black(#000000)"></option>
+		</datalist>
+		Radius: <input id ="rad" size=8 type="number" placeholder="Enter radius"/>
+		<input type="submit" name="submit" value="Submit" />
+		</form>
+	</div>
+	<div id="info" class="top" style="font-weight: bold;">
+		x: <span id="x" class="rightmargin"></span>y: <span id="y" class="rightmargin"></span>Color: <span id="color" class="rightmargin"></span>Radius: <span id="radius" class="rightmargin"></span>
+	</div>
+	<div id="undobutton" class="top">
+		<button id="undo" style="padding: 2px;">Undo</button>
+	</div>
+	<div id="button" class="top">
+		<button id="refresh" style="float: right; padding: 2px;">Clear</button>
+	</div>
+	<canvas id="draw" width="1000" height="560" draggable=true></canvas>
+	<div id="palette">
+		<div id="selected"></div>
+		<div id="showcol"><span id="showcl" style="">Black</span><br><span id="showhx">#000000</span></div>
+		<div id="colors">
+			<div class="palcol" id="Red"></div>
+			<div class="palcol" id="Green"></div>
+			<div class="palcol" id="Blue"></div>
+			<div class="palcol" id="Black"></div>
+		</div>
+	</div>
+</body>
+</html>

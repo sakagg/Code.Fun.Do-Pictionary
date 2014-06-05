@@ -1,0 +1,15 @@
+c:\users\sony\documents\visual studio 2013\Projects\okaydraw\okaydraw\bin\Debug\ReverseMap\resources.pri
+c:\users\sony\documents\visual studio 2013\Projects\okaydraw\okaydraw\bin\Debug\AppxManifest.xml
+c:\users\sony\documents\visual studio 2013\Projects\okaydraw\okaydraw\bin\Debug\okaydraw.build.appxrecipe
+c:\users\sony\documents\visual studio 2013\Projects\okaydraw\okaydraw\bld\Debug\priconfig.xml
+c:\users\sony\documents\visual studio 2013\Projects\okaydraw\okaydraw\bld\Debug\priconfig.xml.intermediate
+c:\users\sony\documents\visual studio 2013\Projects\okaydraw\okaydraw\bld\Debug\layout.resfiles
+c:\users\sony\documents\visual studio 2013\Projects\okaydraw\okaydraw\bld\Debug\layout.resfiles.intermediate
+c:\users\sony\documents\visual studio 2013\Projects\okaydraw\okaydraw\bld\Debug\resources.resfiles
+c:\users\sony\documents\visual studio 2013\Projects\okaydraw\okaydraw\bld\Debug\resources.resfiles.intermediate
+c:\users\sony\documents\visual studio 2013\Projects\okaydraw\okaydraw\bld\Debug\pri.resfiles
+c:\users\sony\documents\visual studio 2013\Projects\okaydraw\okaydraw\bld\Debug\pri.resfiles.intermediate
+c:\users\sony\documents\visual studio 2013\Projects\okaydraw\okaydraw\bld\Debug\qualifiers.txt
+c:\users\sony\documents\visual studio 2013\Projects\okaydraw\okaydraw\bld\Debug\qualifiers.txt.intermediate
+c:\users\sony\documents\visual studio 2013\Projects\okaydraw\okaydraw\bld\Debug\MultipleQualifiersPerDimensionFound.txt
+c:\users\sony\documents\visual studio 2013\Projects\okaydraw\okaydraw\bld\Debug\ProjectArchitectures.txt

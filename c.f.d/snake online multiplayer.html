@@ -1,0 +1,380 @@
+<html>
+<head>
+	<title>Canvas</title>
+	<meta charset="utf-8">
+	<style>
+		#mycanvas
+		{
+			margin-left: auto;
+			margin-right: auto;
+		}
+	</style>
+</head>
+<body>
+
+<script type="text/javascript">
+
+var c, ctx, recurse, cw, scw, speedfactor, colorbg, colorfg, totalx, totaly, food, s, control, other;
+
+var snake1, snake2;
+
+function snake_object(colorfg, colorbg)
+{
+	this.dir = 3;
+	this.colorbg = colorbg;
+	this.colorfg = colorfg;
+	this.score = 0;
+	this.positions = [];
+//	console.log(this);
+
+	this.printer = function()
+	{
+		console.log(this==snake1, this==snake2);
+	}
+
+	this.draw = function(colorNS)
+	{
+//		console.log(colorNS);
+		if(colorNS == undefined)
+			colorNS = this;
+//		console.log(colorNS);
+		var pos;
+		for (var i = this.positions.length - 1; i >= 0; i--)
+		{
+			pos = this.positions[i]
+			drawcell(pos.x, pos.y, colorNS.colorfg, colorNS.colorbg);
+		}
+	}
+
+	this.collided = function(x, y)
+	{
+		for (var i = this.positions.length - 1; i >= 0; i--)
+			if(this.positions[i].x == x && this.positions[i].y == y)
+				return true;
+		return false;
+	}
+
+	this.poptill = function(x, y)
+	{
+//		console.log("Aa Gaya");
+		var tmp;
+		tmp = this.positions.pop();
+		drawcell(tmp.x, tmp.y, window.colorfg, window.colorbg);
+		console.log(tmp.x, tmp.y);
+//		console.log(x, y);
+		while(tmp.x!=x || tmp.y!=y)
+		{
+//			console.log(tmp.x, tmp.y);
+			tmp = this.positions.pop();
+			drawcell(tmp.x, tmp.y, window.colorfg, window.colorbg);
+			console.log(tmp.x, tmp.y);
+		}
+	}
+
+	this.calculatenext = function()
+	{
+		var headx, heady;
+		headx = this.positions[0].x;
+		heady = this.positions[0].y;
+		if(this.dir == 1)			//Left
+			headx--;
+		else if(this.dir == 2)		//Up
+			heady--;
+		else if(this.dir == 3)		//Right
+			headx++;
+		else if(this.dir == 4)		//Down
+			heady++;
+
+		if(headx == -1)
+			headx = totalx - 1;
+		else if(headx == totalx)
+			headx = 0;
+		if(heady == -1)
+			heady = totaly - 1;
+		else if(heady == totaly)
+			heady = 0;
+
+		s.send(this.id + "[" + headx + "," + heady + "]");
+	}
+
+	this.moveitbaby = function(nhx, nhy)
+	{
+		var headx, heady;
+		headx = nhx;
+		heady = nhy;
+	
+		if(food.coord.x==headx && food.coord.y==heady)
+		{
+			this.score++;
+			if(control == this)
+			{
+				food.coord = gen_random_xy();
+				s.send("("+food.coord.x+","+food.coord.y+")");
+			}
+		}
+		else
+			this.positions.pop();
+
+		if(this.collided(headx, heady))
+		{
+			clearInterval(recurse);
+			console.log(snake1.score, snake2.score);
+			return;
+		}
+	
+		this.positions.unshift({x:headx, y:heady});
+	}
+
+	this.create_proto = function(dir)
+	{
+		var def_snake_length = 5;
+		var coord;
+		if(dir == 3)
+		{
+			for (var i = def_snake_length - 1; i >= 0; i--)
+			{
+				coord = {x:i+1, y:1};
+				this.positions.push(coord);
+//				drawcell(coord.x, coord.y, this.colorfg, this.colorbg);
+			}
+			this.dir = 3;
+		}
+		else if(dir == 1)
+		{
+			for(var i = 0; i < def_snake_length; i++)
+			{
+				coord = {x:totalx - def_snake_length - 1 + i, y: totaly - 2};
+				this.positions.push(coord);
+//				drawcell(coord.x, coord.y, this.colorfg, this.colorbg);
+			}
+			this.dir = 1;
+		}
+	}
+
+}
+function move(x)
+{
+//	console.log(x.which);
+	var dir = 0;
+	if(x.which==37 && control.dir!=3)
+		dir = 1;
+	else if(x.which==38 && control.dir!=4)
+		dir = 2;
+	else if(x.which==39 && control.dir!=1)
+		dir = 3;
+	else if(x.which==40 && control.dir!=2)
+		dir = 4;
+
+	if(dir)
+		control.dir = dir;
+	
+/*	if (dir)
+	{
+		var data = dir;
+		s.send(data);
+		console.log("Sending Data", data);
+	}
+*/
+//	snake2.dir = (snake1.dir+1) % 4 + 1;	//Move Snakes in Opposite Direction
+/*
+	else if(x.which==65 && snake2.dir!=3)
+		snake2.dir = 1;
+	else if(x.which==87 && snake2.dir!=4)
+		snake2.dir = 2;
+	else if(x.which==68 && snake2.dir!=1)
+		snake2.dir = 3;
+	else if(x.which==83 && snake2.dir!=2)
+		snake2.dir = 4;
+*/
+	window.removeEventListener('keyup', move);
+	
+	setTimeout(function() {
+		window.addEventListener('keyup', move);
+	}, speedfactor);
+
+//	console.log(snake1.dir);
+}
+
+function gen_random_xy()
+{
+	var rx = Math.floor(Math.random()*totalx);
+	var ry = Math.floor(Math.random()*totaly);
+	return {x:rx, y:ry};
+}
+
+function drawcell(x, y, colorcenter, colorline)
+{
+	ctx.fillStyle = colorline;
+	ctx.fillRect(x*cw, y*cw, cw, cw);
+	ctx.fillStyle = colorcenter;
+	ctx.fillRect(x*cw + (cw-scw)/2, y*cw + (cw-scw)/2, scw, scw);
+}
+
+function fixintercollision()
+{
+	if(snake1.positions[0].x == snake2.positions[0].x && snake1.positions[0].y == snake2.positions[0].y)
+	{
+		if(snake1.positions.length > 1)
+			snake1.poptill(snake1.positions[1].x, snake1.positions[1].y);
+		if(snake2.positions.length > 1)
+			snake2.poptill(snake2.positions[1].x, snake2.positions[1].y);
+	}
+	else
+	{
+		if(snake1.collided(snake2.positions[0].x, snake2.positions[0].y))
+		{
+			console.log("Collision Detected");
+			snake1.poptill(snake2.positions[0].x, snake2.positions[0].y);
+		}
+		if(snake2.collided(snake1.positions[0].x, snake1.positions[0].y))
+		{
+			console.log("Collision Detected");
+			snake2.poptill(snake1.positions[0].x, snake1.positions[0].y);
+		}
+	}
+}
+
+function putsnakes()
+{
+//	fixintercollision();
+	control.calculatenext();
+	drawcell(food.coord.x, food.coord.y, food.colorfg, food.colorbg);
+//	console.log(other.positions.length);
+}
+
+function init_vars()
+{
+	c = document.getElementById('mycanvas');
+	cw=20 *1.5;
+	scw=12 *1.5;
+//	c.width = 1300;
+//	c.height = 600;
+	ctx = c.getContext("2d");
+	totalx = Math.floor(window.innerWidth/cw) - 1;
+  	totaly = Math.floor(window.innerHeight/cw) - 1;
+
+  	c.width = totalx*cw;
+  	c.height = totaly*cw;
+
+// 	console.log(c.width, c.height);
+
+	colorfg = "#FFFF99";
+	colorbg = "#FFFFCC";
+	speedfactor = 100;
+	food = 
+	{
+		coord: {x: 5, y: 5},
+		colorfg: "#0000FF",
+		colorbg: "#9999FF",
+	}
+
+	snake1 = new snake_object("#00FF00", "#99FF99");
+	snake2 = new snake_object("#FF0000", "#FF9999");
+	snake1.create_proto(1);
+	snake2.create_proto(3);
+//	console.log(c);
+//	ctx.transform(100, 100); //Sets 100, 100 as the new origin
+}
+
+function main()
+{	
+	for (var i = 0; i < totalx; i++)
+		for (var j = 0; j < totaly; j++)
+			drawcell(i, j, colorfg, colorbg);
+//	food.coord = gen_random_xy();
+	drawcell(food.coord.x, food.coord.y, food.colorfg, food.colorbg);
+//	console.log(snake1);
+	snake1.draw();
+	snake2.draw();
+	recurse = setInterval(putsnakes, speedfactor);
+}
+
+	
+window.addEventListener('load', init_vars);
+window.addEventListener('keyup', move);
+
+try 
+{
+	var host = "ws://localhost:9110/";
+	console.log("Host:", host);
+	
+	s = new WebSocket(host);
+	
+	s.onopen = function (e) {
+		console.log("Socket opened.");
+	};
+	
+	s.onclose = function (e) {
+		console.log("Socket closed.");
+	};
+	
+	s.onmessage = function (e)
+	{
+//		console.log("Socket message:", e.data);
+		if(e.data == "start1")
+		{
+
+			control = snake1;
+			other = snake2;
+			control.id = "1";
+			main();
+
+//			window.addEventListener("always", main);
+		}
+		else if (e.data == "start2")
+		{
+			control = snake2;
+			other = snake1;
+			control.id = "2";
+			main();
+		}
+		else if (e.data[0] == "(")
+		{
+			var cord = e.data.slice(1,e.data.length-1);
+			cord = cord.split(',');
+			food.coord.x = parseInt(cord[0]);
+			food.coord.y = parseInt(cord[1]);
+		}
+		else if (e.data[0] == "1")
+		{
+			var cord = e.data.slice(2,e.data.length-1);
+			cord = cord.split(',');
+			snake1.draw(window);
+			snake1.moveitbaby(parseInt(cord[0]), parseInt(cord[1]));
+			fixintercollision();
+			snake1.draw();
+		}
+		else if (e.data[0] == "2")
+		{
+			var cord = e.data.slice(2,e.data.length-1);
+			cord = cord.split(',');
+			snake2.draw(window);
+			snake2.moveitbaby(parseInt(cord[0]), parseInt(cord[1]));
+			fixintercollision();
+			snake2.draw();
+		}
+/*		else
+		{
+			if(e.data[0] == "1")
+				snake1.dir = parseInt(e.data[1]);
+			else if(e.data[0] == "2")
+				snake2.dir = parseInt(e.data[1]);
+		}
+*/	};
+	
+	s.onerror = function (e) {
+		console.log("Socket error:", e);
+	};
+}
+catch(ex)
+{
+	console.log("Socket exception:", ex);
+}
+
+</script>
+
+<canvas id="mycanvas" width=600 height=500>
+	Sorry, your browser does not support Canvas.
+</canvas>
+</body>
+</html>
